@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@icon-park/vue": "^1.4.2",
+    "uview-ui": "^2.0.33"
+  },
+  "devDependencies": {
+    "axios": "^0.27.2",
+    "mockjs": "^1.1.0"
+  }
+}

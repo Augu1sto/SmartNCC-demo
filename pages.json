@@ -1,0 +1,192 @@
+{
+	"easycom": {
+		"^u-(.*)":"uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},{
+            "path" : "pages/usercenter/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "用户中心"
+            }
+        },{
+			"path": "pages/usercenter/userinfo",
+			"style": {
+				"navigationBarTitleText": "个人信息",
+				"enablePullDownRefresh": false
+			}
+		}
+        ,{
+            "path" : "pages/usercenter/mystar",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的收藏",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/usercenter/setting",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "设置",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/usercenter/messagebox",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的消息",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/usercenter/editAvatar",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "修改头像",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/usercenter/editPwd",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "修改密码",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/bbs/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "基地论坛",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/map/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "校园地图",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/food/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "食堂菜单",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/activity/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "校园活动",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/attendance/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "考勤记录",
+                "enablePullDownRefresh": false,
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "transparent"
+            }
+            
+        }
+        ,{
+            "path" : "pages/bus/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "校车查询",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/leave/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "请假报备",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/reserve/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "教室预约",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/rights/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "权益反馈",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/attendance/attendanceDetail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "打卡日历",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		// "navigationBarTitleText": "demo",
+		"navigationBarBackgroundColor": "#00adb5",
+		"backgroundColor": "#eeeeee",
+		"navigationStyle": "default"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#00adb5",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/home.svg",
+			"selectedIconPath": "static/home_color.svg",
+			"text": "首页"
+		},{
+			"pagePath": "pages/usercenter/index",
+			"iconPath": "static/user.svg",
+			"selectedIconPath": "static/user_color.svg",
+			"text": "用户中心"
+		}],
+		"midButton": {
+			"height": "60px",
+			"iconPath": "static/add-one.svg",
+			"iconWidth": "50px"
+		}
+	},
+	"uniIdRouter": {}
+}
