@@ -74,51 +74,53 @@
 								<text>下午：</text>
 								<text>晚上：</text>
 							</view>
-							
-							<view v-if="showMore[index]" class="detailInfo">
-								<u-line></u-line>
-								<view class="detailTitle">
-									预定详情
-								</view>
-								<view class="detailList">
-									<u-line></u-line>
-									<view class="smallTitle">
-										<text>教室</text>
-										<text>中午</text>
-										<text>下午</text>
-										<text>晚上</text>
-									</view>
-									<view class="detailItem" v-for="(item0, index0) in item.classroomList" :key="item0.id">
-										<text class="roomName">{{item0.classroom}}</text>
-										<view :class="'timeBox ' + (time.isChosen===true?'chosen_box ':'') + time.status"
-											 v-for="(time, index1) in item0.timeList"
-											:key="time.id"
-											@click="chooseTime(time, index0)"
-										>
-											<view>{{time.startTime}}</view>
-											<view style="line-height: 10px;">-</view>
-											<view>{{time.endTime}}</view>
-											<view class="chosen_status" v-if="time.isChosen===true">
-												<u-icon
-												    name="checkmark"
-												    color="#ffffff"
-												    size="10"
-												></u-icon>
+							<transition name="collapse">
+								<view v-if="showMore[index]">
+									<view class="detailInfo">
+										<u-line></u-line>
+										<view class="detailTitle">
+											预定详情
+										</view>
+										<view class="detailList">
+											<u-line></u-line>
+											<view class="smallTitle">
+												<text>教室</text>
+												<text>中午</text>
+												<text>下午</text>
+												<text>晚上</text>
+											</view>
+											<view class="detailItem" v-for="(item0, index0) in item.classroomList" :key="item0.id">
+												<text class="roomName">{{item0.classroom}}</text>
+												<view :class="'timeBox ' + (time.isChosen===true?'chosen_box ':'') + time.status"
+													 v-for="(time, index1) in item0.timeList"
+													:key="time.id"
+													@click="chooseTime(time, index0)"
+												>
+													<view>{{time.startTime}}</view>
+													<view style="line-height: 10px;">-</view>
+													<view>{{time.endTime}}</view>
+													<view class="chosen_status" v-if="time.isChosen===true">
+														<u-icon
+															name="checkmark"
+															color="#ffffff"
+															size="10"
+														></u-icon>
+													</view>
+												</view>
 											</view>
 										</view>
-									</view>
-								</view>
-								<view class="footer">
-									<view class="tips">
-										<view>可预约</view>
-										<view>不可约</view>
-										<view>已选择</view>
-									</view>
-									<u-button color="#00adb5" size="small" text="确认预约"></u-button>
-								</view>
+										<view class="footer">
+											<view class="tips">
+												<view>可预约</view>
+												<view>不可约</view>
+												<view>已选择</view>
+											</view>
+											<u-button color="#00adb5" size="small" text="确认预约"></u-button>
+										</view>
 
-							</view>
-							
+									</view>
+								</view>
+							</transition>
 						</view>
 					
 					</view>
@@ -230,6 +232,7 @@
 			// console.log(+JSON.stringify(this.tBuilding));
 			this.initialData();
 		},
+		
 		methods: {
 			initialData() {
 				this.chosenArea = '';
@@ -426,7 +429,7 @@
 	// 	color: #555555;
 	// }
 	
-	.preDay:hover, .nextDay:hover {
+	.preDay:active, .nextDay:active {
 		background-color: rgba(240, 240, 240, 0.5);
 	}
 	
@@ -473,7 +476,7 @@
 		align-items: center;
 	}
 	
-	.building:active {
+	.building:active{
 		background-color: #cccccc;
 	}
 	
@@ -499,6 +502,7 @@
 		border-radius: 8px;
 		box-shadow: 0 0 5px desaturate($theme-color,40%);
 		margin-bottom: 20px;
+		overflow-y: hidden;
 	}
 	
 	.areaItem>.itemHeader {
@@ -527,6 +531,20 @@
 		justify-content: space-between;
 	}
 
+	/**
+	 * collapse过渡动画
+	 */
+	.collapse-leave-active,.collapse-enter-active {
+		transition: max-height 0.5s ease;
+	}
+	.collapse-enter,.collapse-leave-to {
+		max-height: 0px ;
+	}
+	.collapse-enter-to,.collapse-leave {
+		max-height: 700px ;
+	}
+
+
 	.briefInfo {
 		padding: 3px 20px;
 		font-size: 13px;
@@ -534,6 +552,7 @@
 		flex-direction: row;
 		justify-content: space-between;
 		color: #555555;
+		box-sizing: content-box;
 	}
 	
 	.detailInfo {
