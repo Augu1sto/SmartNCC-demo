@@ -70,9 +70,9 @@
 						</view>
 						<view class="itemContent">
 							<view class="briefInfo">
-								<text>上午：</text>
-								<text>下午：</text>
-								<text>晚上：</text>
+								<text>上午：{{item.brief[0]}}</text>
+								<text>下午：{{item.brief[1]}}</text>
+								<text>晚上：{{item.brief[2]}}</text>
 							</view>
 							<transition name="collapse">
 								<view v-if="showMore[index]">
@@ -85,7 +85,7 @@
 											<u-line></u-line>
 											<view class="smallTitle">
 												<text>教室</text>
-												<text>中午</text>
+												<text>上午</text>
 												<text>下午</text>
 												<text>晚上</text>
 											</view>
@@ -94,7 +94,7 @@
 												<view :class="'timeBox ' + (time.isChosen===true?'chosen_box ':'') + time.status"
 													 v-for="(time, index1) in item0.timeList"
 													:key="time.id"
-													@click="chooseTime(time, index0)"
+													@click="chooseTime(time, item0.id)"
 												>
 													<view>{{time.startTime}}</view>
 													<view style="line-height: 10px;">-</view>
@@ -115,7 +115,7 @@
 												<view>不可约</view>
 												<view>已选择</view>
 											</view>
-											<u-button color="#00adb5" size="small" text="确认预约"></u-button>
+											<u-button color="#00adb5" size="small" text="确认预约" @click="submit"></u-button>
 										</view>
 
 									</view>
@@ -151,89 +151,54 @@
 				chosenDate: mDate.nextDate(),
 				chosenTime: [],//{roomName:'',timeName:''}
 				chosenArea: '',
-				tBuilding: [{
-					name: "新珈楼",
-					area: [
-						{
-							id: 0,
-							name: "A区",
-							classroomList: [
-								{
-									id: 0,
-									classroom: "103",
-									timeList: [{
-											id: 0,
-											startTime: "09:00",
-											endTime: "11:00",
-											status: 'available'
-										}, {
-											id: 1,
-											startTime: "14:00",
-											endTime: "16:00",
-											status: 'available'
-										}, {
-											id: 2,
-											startTime: "16:00",
-											endTime: "18:00",
-											status: 'available'
-										}, {
-											id: 3,
-											startTime: "18:00",
-											endTime: "20:00",
-											status: 'busy'
-										}
-										
-									]
-								}, {
-									id: 1,
-									classroom: "203",
-									timeList: [{
-											id: 0,
-											startTime: "09:00",
-											endTime: "11:00",
-											status: 'available'
-										}, {
-											id: 1,
-											startTime: "14:00",
-											endTime: "16:00",
-											status: 'available'
-										}, {
-											id: 2,
-											startTime: "16:00",
-											endTime: "18:00",
-											status: 'available'
-										}, {
-											id: 3,
-											startTime: "18:00",
-											endTime: "20:00",
-											status: 'busy'
-										}
-										
-									]
-								}
-							]
-						}, 
-						{
-							id: 1,
-							name: "B区"
-						}
-					]
-				},
-				{
-					name: "明德楼",
-					area: [
-					]
-				}],
+				tBuilding : [],
 				currentBuilding: {}
 			}
 		},
-		onLoad() {
-			this.currentBuilding = this.tBuilding[0];
-			// console.log(+JSON.stringify(this.tBuilding));
-			this.initialData();
+		watch: {
+			chosenDate(newDate){
+				this.fetchInitialData(newDate);
+			}
 		},
-		
+		onLoad() {
+			this.fetchInitialData();
+		},
+
 		methods: {
+			fetchInitialData(chosen_date) {
+				let _this = this;
+				uni.showLoading({
+					title: "正在加载"
+				})
+				let req = {
+					date: chosen_date||mDate.nextDate()
+				}
+				this.$axios.get('/reserve/getRsvbyDate', {params:req}).then((res)=>{
+			
+					console.log(res);
+					if(res.status===200) {
+						console.log(res.data);
+						_this.tBuilding = res.data;
+						_this.currentBuilding = _this.tBuilding[0];
+						_this.initialData();
+						uni.hideLoading();
+						
+					} else {
+						uni.hideLoading();
+						uni.showToast({
+							title: res.statusText,
+							icon: 'none'
+						})
+					}
+				}).catch((err)=>{
+					console.log(err);
+					uni.hideLoading();
+					uni.showToast({
+						title: '网络故障',
+						icon: 'error'
+					})
+				});
+			},
 			initialData() {
 				this.chosenArea = '';
 				this.showMore = [];
@@ -248,6 +213,7 @@
 				});
 
 			},
+
 
 
 			confirm(e) {
@@ -362,6 +328,56 @@
 				this.$forceUpdate();
 				console.log(JSON.stringify(this.chosenTime));
 			},
+			/**
+			 * 确认预约
+			 */
+			submit() {
+				if(uni.$u.test.isEmpty(this.chosenTime)) {
+					uni.showToast({
+						title: '请选择时间段'
+					});
+				} else {
+					this.postData();
+				}
+				
+			},
+			
+			postData() {
+				let _this = this;
+				uni.showLoading({
+					title: "提交中"
+				})
+				let req = {
+					bid: 0,
+					date: this.chosenDate,
+					areaid: this.chosenArea,
+					time: this.chosenTime
+				}
+				this.$axios.post('/reserve', {data:req}).then((res)=>{
+					console.log(res);
+					if(res.status===200&&res.data) {
+						uni.hideLoading();
+						uni.showToast({
+							title: "预约成功",
+							icon: 'none'// 停留
+						});
+						// 跳转或刷新页面
+					} else {
+						uni.hideLoading();
+						uni.showToast({
+							title: res.statusText,
+							icon: 'none'
+						})
+					}
+				}).catch((err)=>{
+					console.log(err);
+					uni.hideLoading();
+					uni.showToast({
+						title: '网络故障',
+						icon: 'error'
+					})
+				});
+			}
 
 		}
 	}
@@ -417,17 +433,6 @@
 		display: inline-block;
 		margin: 5px;
 	}
-	// .preDay>text::before {
-	// 	content: '↩';
-	// 	margin-right: 5px;
-	// 	color: #555555;
-	// }
-	
-	// .nextDay>text::after {
-	// 	content: '↪';
-	// 	margin-left: 5px;
-	// 	color: #555555;
-	// }
 	
 	.preDay:active, .nextDay:active {
 		background-color: rgba(240, 240, 240, 0.5);

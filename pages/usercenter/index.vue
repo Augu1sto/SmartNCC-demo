@@ -7,7 +7,7 @@
 		<view class="info-cell">
 			<u-cell-group :border="false">
 				<u-cell icon="account-fill" size="large" title="个人信息" :isLink="true" @click="goToUserInfo"></u-cell>
-				<u-cell icon="star-fill" size="large" title="我的收藏" :isLink="true" @click="goToMyStar"></u-cell>
+				<u-cell icon="tags-fill" size="large" title="我的预约" :isLink="true" @click="goToMyRsv"></u-cell>
 				<u-cell icon="chat" size="large" title="我的消息" :isLink="true" @click="goToMessageBox">
 					<text slot="value" class="u-slot-value">{{msgNumber}}</text>
 				</u-cell>
@@ -39,9 +39,9 @@
 					url: './userinfo',
 				});
 			},
-			goToMyStar() {
+			goToMyRsv() {
 				uni.navigateTo({
-					url:'./mystar'
+					url:'./myreservation'
 				});
 			},
 			goToMessageBox() {
