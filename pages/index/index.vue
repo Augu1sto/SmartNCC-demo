@@ -8,7 +8,7 @@
 				<swiper :indicator-dots="true" class="swiper">
 					<swiper-item>
 						<view class="mygrid">
-							<view class="mygrid-item" v-for="(item, index) in swiperList" v-if="index<6" :key="item.id" @click="click(item.url)">
+							<view class="mygrid-item" v-for="(item, index) in swiperList" v-if="index<6" :key="item.id" @click="choose(item.url)">
 								<u-icon :customStyle="{paddingTop:20+'rpx'}" :name="item.name" :size="30"></u-icon>
 								<text class="grid-text">{{item.title}}</text>
 							</view>
@@ -16,7 +16,7 @@
 					</swiper-item>
 					<swiper-item>
 						<view class="mygrid">
-							<view class="mygrid-item" v-for="(item, index) in swiperList" v-if="index>5" :key="item.id" @click="click(item)">
+							<view class="mygrid-item" v-for="(item, index) in swiperList" v-if="index>5" :key="item.id" @click="choose(item.url)">
 								<u-icon :customStyle="{paddingTop:20+'rpx'}" :name="item.name" :size="30"></u-icon>
 								<text class="grid-text">{{item.title}}</text>
 							</view>
@@ -26,11 +26,14 @@
 			</view>
 		
 			<view class="picbox">
-				<u-swiper
+				<u-swiper class="pickItem"
 						:list="picList"
+						keyName="image"
+						showTitle
 						indicator
 						indicatorMode="line"
 						circular
+						@click="clickPic"
 				></u-swiper>
 			</view>
 			
@@ -38,19 +41,16 @@
 				<view class="title">
 					<p class="titletext">外链直达</p>
 				</view>
-				<u-grid col="4">
-					<u-grid-item
+				<view class="exurls-box">
+					<view class="exitem"
 							v-for="(listItem,listIndex) in exurlList"
 							:key="listIndex"
+							@click="openUrl(listItem)"
 					>
-						<u-icon
-								:customStyle="{paddingTop:20+'rpx'}"
-								:name="listItem.name"
-								:size="22"
-						></u-icon>
+						<view class="url-box" :style="{backgroundImage: 'url('+listItem.image+')'}"></view>
 						<text class="grid-text">{{listItem.title}}</text>
-					</u-grid-item>
-				</u-grid>
+					</view>
+				</view>
 			</view>
 		</view>
 
@@ -122,48 +122,72 @@
 				],
 				
 				picList: [
-					'../../static/pic0.png',
-					'../../static/pic1.png',
-					'../../static/pic2.png'
+					{
+						image: '../../static/0.png',
+						title: '关于召开武汉大学国家网络安全学院第五次研究生代表大会的通知',
+					},
+					{
+						image: '../../static/1.png',
+						title: '武汉大学毕业预热文艺晚会向你发送了一封邀请函'
+					},
+					{
+						image: '../../static/pic1.png',
+						title: '关于召开武汉大学国家网络安全学院第五次研究生代表大会的通知'
+					}
 				],
 				
-				exurlList: [{
-                    name: 'photo',
-                    title: '图片'
+				picUrl: [
+					'',
+					'../activity/activityDetail?id=cf8aFFB0-7DE2-DAE4-7dE1-25aB9f9eFbF3',
+					''
+				],
+				
+				
+				exurlList: [
+                    {
+                        image: '../../static/expic1.png',
+                        title: '武汉大学信息门户',
+						url: 'https://cas.whu.edu.cn/authserver/login'
+						
                     },
                     {
-                        name: 'lock',
-                        title: '锁头'
-                    },
-                    {
-                        name: 'star',
-                        title: '星星'
-                    },
-                    {
-                        name: 'hourglass',
-                        title: '沙漏'
-                    }
-			
+                        image: '../../static/expic2.png',
+                        title: '华中科技大学信息门户',
+						url: 'https://pass.hust.edu.cn/cas/login'
+                    }			
 				]
 			
 			}
 		},
-		// created() {
-		// 	this.fetchData()
-		// },
+
 		methods: {
-			// fetchData(){
-			// 	console.log('自我测试')
-			// 	this.$axios.get('http://localhost:8080/getResource/getData').then((res)=>{
-			// 		console.log(res)
-			// 	})
-			// },
-			click(url) {
+
+			choose(url) {
 				console.log(url);
+				if(url){
+					uni.navigateTo({
+						url: url
+					});
+				} else {
+					uni.showToast({
+						title: '暂无页面',
+						icon: "error"
+					})
+				}
+
+				
+			},
+			openUrl(item) {
+				console.log(item.url);
+				// let url_1 = encodeURIComponent(url);
 				uni.navigateTo({
-					url: url
-				});
-				console.log(url);
+					url: '/pages/index/webView?url='+item.url+'&title='+item.title,
+				})
+			},
+			clickPic(index) {
+				console.log(index);
+				console.log(this.picUrl[index])
+				this.choose(this.picUrl[index]);
 			}
 		}
 	}
@@ -222,6 +246,31 @@
 	.exurls {
 		margin: 60rpx auto;
 		width: 90%;
+	}
+	
+	.exurls-box {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		justify-items: center;
+	}
+	
+	.exitem {
+		gap: 10px;
+		text-align: center;
+	}
+	
+	
+	.pickItem:active,.exitem:active {
+		filter: brightness(80%);
+	}
+	
+	.url-box {
+		height: 30px;
+		width: 150px;
+		border: white 2px solid;
+		border-radius: 3px;
+		background-size: cover;
+		background-repeat: no-repeat;
 	}
 
 	.title {

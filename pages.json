@@ -22,10 +22,10 @@
 			}
 		}
         ,{
-            "path" : "pages/usercenter/myreservation",
+            "path" : "pages/usercenter/reservation",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "我的预约",
+                "navigationBarTitleText": "预约凭证",
                 "enablePullDownRefresh": false
             }
             
@@ -154,6 +154,24 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "打卡日历",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/index/webView",
+            "style" :                                                                                    
+            {
+                // "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/activity/activityDetail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "活动详情",
                 "enablePullDownRefresh": false
             }
             

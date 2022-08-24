@@ -24,10 +24,79 @@ Mock.mock(RegExp(`${mockURL}/reserve/getRsvbyDate` + ".*"), 'get', (options)=>{
 
 // 处理预约请求
 Mock.mock(RegExp(`${mockURL}/reserve` + ".*"), 'post', (options)=>{
-	console.log('mock', options.body); // "http://localhost:8080/reserve/getRsvbyDate?date=2022-08-17"
+	console.log('mock', options.body);
 	// let data = urlParser.parse2JSON(options.url);
 	let data = JSON.parse(options.body).data;
 	let res = reserveMock.makeRsv(data);
 	return res;
 });
 
+// 发送预约信息
+Mock.mock(`${mockURL}/reservation`, 'get', reserveMock.myRsv);
+
+
+/**
+ * 校车查询
+ */
+import busMock from './bus.js'
+Mock.mock(RegExp(`${mockURL}/bus` + ".*"), 'get', (options)=>{
+	console.log('mock', options.url); // "http://localhost:8080/bus?.."
+	let data = urlParser.parse2JSON(options.url);
+	return busMock.getData(data.sidx, data.dayidx, data.diridx);
+});
+
+
+/**
+ * 活动报名
+ */
+import activityMock from './activity.js'
+
+// 获得活动列表
+Mock.mock(RegExp(`${mockURL}/activity/getList` + ".*"), 'get', (options)=>{
+	console.log('mock', options.url); // "http://localhost:8080/"
+	let data = urlParser.parse2JSON(options.url);
+	return activityMock.selectData(data.type, data.sidx, data.status);
+});
+
+// 获得活动详细信息
+Mock.mock(RegExp(`${mockURL}/activity/getDetail` + ".*"), 'get', (options)=>{
+	console.log('mock', options.url); // "http://localhost:8080/bus?.."
+	let data = urlParser.parse2JSON(options.url);
+	return activityMock.getDetail(data.id);
+});
+
+// 处理收藏请求
+Mock.mock(RegExp(`${mockURL}/activity/star` + ".*"), 'post', (options)=>{
+	console.log('mock', options.body);
+	// let data = urlParser.parse2JSON(options.url);
+	let data = JSON.parse(options.body).data;
+	let res = activityMock.starActivity(data.id);
+	return res;
+});
+
+// 处理取消收藏请求
+Mock.mock(RegExp(`${mockURL}/activity/unstar` + ".*"), 'post', (options)=>{
+	console.log('mock', options.body);
+	// let data = urlParser.parse2JSON(options.url);
+	let data = JSON.parse(options.body).data;
+	let res = activityMock.unStarActivity(data.id);
+	return res;
+});
+
+// 处理报名请求
+Mock.mock(RegExp(`${mockURL}/activity/join` + ".*"), 'post', (options)=>{
+	console.log('mock', options.body);
+	// let data = urlParser.parse2JSON(options.url);
+	let data = JSON.parse(options.body).data;
+	let res = activityMock.joinActivity(data.id);
+	return res;
+});
+
+// 处理取消报名请求
+Mock.mock(RegExp(`${mockURL}/activity/cancel` + ".*"), 'post', (options)=>{
+	console.log('mock', options.body);
+	// let data = urlParser.parse2JSON(options.url);
+	let data = JSON.parse(options.body).data;
+	let res = activityMock.cancelJoin(data.id);
+	return res;
+});

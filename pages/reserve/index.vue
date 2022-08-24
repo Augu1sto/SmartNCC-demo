@@ -9,7 +9,7 @@
 						<li>只能预约一周内的教室</li>
 						<li>一次最多预约一个时段</li>
 						<li>预约成功后，请凭预约凭证（<span class="strong">【首页】-【用户中心】-【预约凭证】</span>）在预约前半小时内去A209找管理员开门</li>
-						<li>如果计划改变不用教室，请提前取消</li>
+						<!-- <li>如果计划改变不用教室，请提前取消</li> -->
 						<li>请保持教室卫生</li>
 						<li>如有问题，请联系159xxxxxxxx（x老师）</li>
 					</ol>
@@ -356,10 +356,15 @@
 				this.$axios.post('/reserve', {data:req}).then((res)=>{
 					console.log(res);
 					if(res.status===200&&res.data) {
+						console.log(res.data);
 						uni.hideLoading();
 						uni.showToast({
 							title: "预约成功",
-							icon: 'none'// 停留
+							icon: 'none',
+							duration: 3000,
+							complete: uni.redirectTo({
+								url: '../usercenter/reservation'
+							})
 						});
 						// 跳转或刷新页面
 					} else {
