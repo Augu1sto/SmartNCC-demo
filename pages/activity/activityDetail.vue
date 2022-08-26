@@ -116,9 +116,12 @@
 				</view>
 			</view>
 		</view>
-	
-		<view class="btn-area">
-			<view :class="['star_btn', star===true?'activeStar':'']" @click="clickStar">
+		<!-- 游客页面 -->
+		<view class="btn-area" v-if="!hasLogin">
+			<u-button shape="circle" :plain="true" :hairline="true" color="grey" @click="goToLogin">报名请先登录</u-button>
+		</view>
+		<view class="btn-area" v-else>
+			<view :class="['star_btn', star===true?'activeStar':'inactiveStar']" @click="clickStar">
 				<star class="star star1" theme="outline" size="30" fill="#ffce07" :strokeWidth="3" strokeLinejoin="miter"/>
 				<star class="star star2" theme="filled" size="30" fill="#ffce07" :strokeWidth="3" strokeLinejoin="miter"/>
 			</view>
@@ -170,7 +173,11 @@
 
 <script>
 	import {TwoDimensionalCodeTwo, Star} from '@icon-park/vue';
+	import { mapState, mapMutations } from 'vuex';
 	export default {
+		computed: {
+			...mapState(['hasLogin'])
+		},
 		components: {
 			TwoDimensionalCodeTwo,
 			Star
@@ -211,6 +218,7 @@
 				data: {}
 			}
 		},
+
 		onLoad(res) {
 			this.id = res.id;
 			this.fetchInitialData();
@@ -240,7 +248,7 @@
 			
 					console.log(res);
 					if(res.status===200) {
-						console.log(JSON.stringify(res.data));
+						// console.log(JSON.stringify(res.data));
 						_this.data = res.data.detail;
 						_this.data.join = res.data.join;
 						_this.star = (res.data.star == 1);
@@ -383,6 +391,11 @@
 						icon: 'error'
 					})
 				});
+			},
+			goToLogin() {
+				uni.navigateTo({
+					url: '/pages/login/login'
+				})
 			}
 		}
 	}
@@ -458,19 +471,88 @@
 			top: 0;
 			left: 0;
 		}
+		.star2:hover {
+			animation: bounce-out-zoomin 0.5s ease 0s 1 normal none;
+		}
 		.star2 {
 			transform: scale(0);
-			transition: transform 1s ease-in-out;
-			
 		}
-	}
 
+	}
+	
 	.activeStar {
 		.star2 {
 			transform: scale(1); // 不能写100%
-			transition: transform 0.5s ease-in-out;
 		}
+
+	}	
+	
+	.activeStar:hover{
+		animation: rubberband-horizontal 1s ease 0s 1 normal forwards;
 	}
+
+	
+	@keyframes bounce-out-zoomin {
+	  0%{
+	    transform: scale(1);
+	    animation-timing-function: ease-out;
+	  }
+	  5%{
+	    transform: scale(1.04);
+	    animation-timing-function: ease-in;
+	  }
+	  10%{
+	    transform: scale(1);
+	    animation-timing-function: ease-out;
+	  }
+	  20%{
+	    transform: scale(1.24);
+	    animation-timing-function: ease-in;
+	  }
+	  30%{
+	    transform: scale(1);
+	    animation-timing-function: ease-out;
+	  }
+	  45%{
+	    transform: scale(1.5);
+	    animation-timing-function: ease-in;
+	  }
+	  65%{
+	    transform: scale(1);
+	    animation-timing-function: ease-out;
+	    opacity: 1;
+	  }
+	  100%{
+	    transform: scale(4);
+	    animation-timing-function: ease-in;
+	    opacity: 0;
+	  }
+	}
+	
+	@keyframes rubberband-horizontal {
+	  0%{
+		transform: scale3d(1,1,1);
+	  }
+	  30%{
+		transform: scale3d(1.25,.75,1);
+	  }
+	  40%{
+		transform: scale3d(.75,1.25,1);
+	  }
+	  50%{
+		transform: scale3d(1.15,.85,1);
+	  }
+	  65%{
+		transform: scale3d(.95,1.05,1);
+	  }
+	  75%{
+		transform: scale3d(1.05,.95,1);
+	  }
+	  100%{
+		transform: scale3d(1,1,1);
+	  }
+	}
+	
 	
 	.pop {
 		padding: 32rpx;

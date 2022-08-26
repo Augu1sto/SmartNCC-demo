@@ -1,7 +1,7 @@
 /** 
  * @module 教室预约信息
 **/
-const Mock = require('mockjs')
+const Mock = require('better-mock')
 const Random = Mock.Random
 
 const time = require('@/utils/mytime.js');

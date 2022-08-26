@@ -1,8 +1,8 @@
 <template>
-	<view class="main">
+	<view class="main" v-if="this.hasLogin">
 		<view class="account-header">
-			<u-avatar :src="src" size="60"></u-avatar>
-			<view class="uname">欢迎，{{username || '游客'}}</view>
+			<u-avatar :src="myAvatar" size="60"></u-avatar>
+			<view class="uname">欢迎，{{myname}}</view>
 		</view>
 		<view class="info-cell">
 			<u-cell-group :border="false">
@@ -15,25 +15,38 @@
 			</u-cell-group>
 		</view>
 		<view class="btn-area">
-			<u-button type="error" :hairline="true" text="退出登录"></u-button>
+			<u-button type="error" :hairline="true" text="退出登录" @click="toLogout"></u-button>
 		</view>
 	</view>
 </template>
 
 <script>
-	const myname = "GY"; // 名字
-	const msgNumber = 99;
-
+	import { mapState, mapGetters, mapMutations } from 'vuex';
 	export default {
+		computed: {
+			...mapState(['hasLogin']),
+			...mapGetters({
+					myname: 'getUsername', 
+					myAvatar: 'getAvatarUrl'
+				})
+		},
 		data() {
 			return {
-				src: "../../static/avatar.jpg",
-				username: myname,
-				namecap: myname[0], // 名字的首字
-				msgNumber: msgNumber
+				// name: this.myname,
+				// namecap: name[0], // 名字的首字
+				msgNumber: 99
+			}
+		},
+
+		onShow() {
+			if(!this.hasLogin) {
+				uni.redirectTo({
+					url:'/pages/login/login'
+				})
 			}
 		},
 		methods: {
+			...mapMutations(['logout']),
 			goToUserInfo() {
 				uni.navigateTo({
 					url: './userinfo',
@@ -53,6 +66,15 @@
 				uni.navigateTo({
 					url: './setting'
 				});
+			},
+			toLogout() {
+				uni.showLoading({
+					title: "正在退出"
+				})
+				this.logout();
+				uni.redirectTo({
+					url: '/pages/login/login'
+				})
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-const Mock = require('mockjs')
+const Mock = require('better-mock')
 const mockURL = 'http://localhost:8080'
 import urlParser from './utils/urlParser.js'
 
@@ -99,4 +99,27 @@ Mock.mock(RegExp(`${mockURL}/activity/cancel` + ".*"), 'post', (options)=>{
 	let data = JSON.parse(options.body).data;
 	let res = activityMock.cancelJoin(data.id);
 	return res;
+});
+
+
+/**
+ * 模拟用户登录
+ */
+import loginMock from './userlogin.js'
+
+
+// 普通登录
+Mock.mock(RegExp(`${mockURL}/login` + ".*"), 'get', (options)=>{
+	console.log('mock', options.url);
+	let data = urlParser.parse2JSON(options.url);
+	return loginMock.login(data.username, data.password);
+});
+
+// token登录
+Mock.mock(`${mockURL}/tokenlogin`, 'get', (options)=>{
+	console.log('mock', options.headers);
+	if(options.headers.Authorization) {
+		return loginMock.loginWithToken(options.headers.Authorization);
+	}
+	return {code:900,msg:'ERROR'};
 });

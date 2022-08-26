@@ -61,6 +61,7 @@
 </template>
 
 <script>
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -159,7 +160,23 @@
 			
 			}
 		},
-
+		computed: {
+			...mapState(['hasLogin'])
+		},
+		onShow() {
+			if(!this.hasLogin) {
+				console.log("no!")
+				uni.setTabBarItem({
+				  index: 1,
+				  text: '登录',
+				})
+			} else {
+				uni.setTabBarItem({
+				  index: 1,
+				  text: '用户中心'
+				})
+			}
+		},
 		methods: {
 
 			choose(url) {

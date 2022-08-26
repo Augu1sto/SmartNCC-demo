@@ -3,10 +3,45 @@
 	@import 'uview-ui/index.scss';
 </style>
 <script>
-	
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex';
+
 	export default {
+		methods: {
+			...mapMutations(['login']),
+		},
 		onLaunch: function() {
-			console.log('App Launch')
+			console.log('App Launch');
+			let token = uni.getStorageSync('smartNCCdemo_' + 'tokenInfo').token;
+			let _this = this;
+			if(token) {
+				console.log('APP:Login:hasToken');
+				console.log(token);
+				uni.getStorage({
+					key: 'smartNCCdemo_' + 'tokenInfo',
+					success: (res) => {
+						_this.login(res.data);
+						console.log('APP: set vuex');
+						console.log('APP: Login:Start')
+						let req = {};
+						this.$axios.get('/tokenlogin', {params:req}).then((res)=>{
+								console.log('tokenlogin', res.data);
+								if(res.status === 200) {
+									if(res.data.code !== 299 ){
+										_this.$store.dispatch('reLogin');
+										_this.$isResolve();
+									} else {
+										console.log("APP: Login OK")
+										_this.$isResolve();
+									}
+								}
+							})
+					},
+				})
+			}
+			_this.$isResolve();
 		},
 		onShow: function() {
 			console.log('App Show')

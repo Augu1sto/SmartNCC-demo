@@ -106,7 +106,7 @@
 				// console.log(this.currNow);
 				this.currNow = index;
 				this.fetchInitialData();
-				console.log(JSON.stringify(this.data));
+				// console.log(JSON.stringify(this.data));
 			},
 			choose(index) {
 				this.chosen = index;
@@ -130,7 +130,7 @@
 			
 					console.log(res);
 					if(res.status===200) {
-						console.log(JSON.stringify(res.data));
+						// console.log(JSON.stringify(res.data));
 						_this.data = res.data;
 						uni.hideLoading();
 						

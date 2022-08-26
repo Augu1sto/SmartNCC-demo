@@ -6,27 +6,24 @@ console.log(uni.$u.config.v);
 import '@icon-park/vue/styles/index.css';
 
 // 引入axios和mockjs
-import axios from 'axios';
-axios.defaults.baseURL = "http://localhost:8080" // mockURL
+import axios from 'utils/http.js';
+
 Vue.prototype.$axios = axios;
 require('./mock/index.js');// 注意文件路径名称
 
-// #ifndef VUE3
+
 import Vue from 'vue'
+import store from './store'
+
 Vue.config.productionTip = false
 App.mpType = 'app'
+
+Vue.prototype.$onLaunched = new Promise(resolve => {
+	Vue.prototype.$isResolve = resolve;
+})
+
 const app = new Vue({
-    ...App
+    ...App,
+	store
 })
 app.$mount()
-// #endif
-
-// #ifdef VUE3
-import { createSSRApp } from 'vue'
-export function createApp() {
-  const app = createSSRApp(App)
-  return {
-    app
-  }
-}
-// #endif

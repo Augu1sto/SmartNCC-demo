@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "@icon-park/vue": "^1.4.2",
+    "better-mock": "^0.3.6",
+    "jsonwebtoken": "^8.5.1",
     "uview-ui": "^2.0.33"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-const Mock = require('mockjs')
+const Mock = require('better-mock')
 const Random = Mock.Random
 /**
  * 所有数据
@@ -259,7 +259,6 @@ function unStarActivity(id) {
 	starkey.splice(idx, idx);
 	return true;
 }
-
 
 
 module.exports  = {selectData, getDetail, joinActivity, cancelJoin, starActivity, unStarActivity};
