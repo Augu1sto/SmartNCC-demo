@@ -68,7 +68,18 @@
 	
 	const mDate = require("@/utils/mytime.js");
 	
+	import { mapState } from 'vuex';
 	export default {
+		computed: {
+			...mapState(['hasLogin'])
+		},
+		onShow() {
+			if(!this.hasLogin) {
+				uni.redirectTo({
+					url:'/pages/login/login'
+				})
+			}
+		},
 		data() {
 			return {
 				startDate: mDate.calcDate(-30), // 查询1个月的信息

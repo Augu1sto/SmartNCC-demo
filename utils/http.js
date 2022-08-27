@@ -4,7 +4,10 @@ import axios from 'axios';
 
 
 axios.defaults.timeout = 5000;
-axios.defaults.baseURL = "http://localhost:8080" // mockURL
+
+// axios.defaults.baseURL = "http://192.168.43.14:8080"
+axios.defaults.baseURL = "http://localhost:8080"; // mockURL
+axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 //http request 拦截器
 axios.interceptors.request.use(
 	config => {
@@ -14,10 +17,10 @@ axios.interceptors.request.use(
 		// 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断 
 
 		config.data = JSON.stringify(config.data);
-		config.headers = {
-			'Content-Type':'application/x-www-form-urlencoded'
-		}
-		
+		// config.headers = {
+		// 	'Content-Type':'application/x-www-form-urlencoded'
+		// }
+
 		//JWT方案 插入HEADER
 		const token = store.state.token;
 

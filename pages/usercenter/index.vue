@@ -1,7 +1,8 @@
 <template>
 	<view class="main" v-if="this.hasLogin">
 		<view class="account-header">
-			<u-avatar :src="myAvatar" size="60"></u-avatar>
+			<!-- <u-avatar :src="myAvatar" size="60"></u-avatar> -->
+			<u-avatar :text="myname?myname[0].toUpperCase():''" fontSize="18" size="60" randomBgColor></u-avatar>
 			<view class="uname">欢迎，{{myname}}</view>
 		</view>
 		<view class="info-cell">
@@ -27,7 +28,7 @@
 			...mapState(['hasLogin']),
 			...mapGetters({
 					myname: 'getUsername', 
-					myAvatar: 'getAvatarUrl'
+					// myAvatar: 'getAvatarUrl'
 				})
 		},
 		data() {
@@ -40,6 +41,9 @@
 
 		onShow() {
 			if(!this.hasLogin) {
+				uni.setNavigationBarTitle({
+					title: '正在跳转'
+				});
 				uni.redirectTo({
 					url:'/pages/login/login'
 				})

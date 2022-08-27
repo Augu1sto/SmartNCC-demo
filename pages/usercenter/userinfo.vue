@@ -1,10 +1,11 @@
 <template>
 	<view>
 		<view class="info-cell">
-			<u-cell title="头像" :isLink="true" @click="editAvatar">
-				<text slot="value" class="u-slot-value"><u-avatar :src="myAvatar" shape="square"></u-avatar></text>
+			<u-cell title="头像">
+			<!-- <u-cell title="头像" :isLink="true" @click="editAvatar"> -->
+				<view slot="value" class="u-slot-value"><u-avatar :text="myname?myname[0].toUpperCase():''" fontSize="18" shape="square" randomBgColor></u-avatar></view>
 			</u-cell>
-			<u-cell title="姓名" :value="myname"></u-cell>
+			<u-cell title="用户名" :value="myname"></u-cell>
 			<u-cell title="学校" :value="mySchool"></u-cell>
 			<u-cell title="学号" :value="myNumber"></u-cell>
 			<u-cell title="手机号" :value="myTel" :border="false"></u-cell>	
@@ -22,7 +23,7 @@
 			...mapState(['hasLogin']),
 			...mapGetters({
 					myname: 'getUsername', 
-					myAvatar: 'getAvatarUrl',
+					// myAvatar: 'getAvatarUrl',
 					mySchool: 'getSchool',
 					myNumber: 'getNumber',
 					myTel: 'getTel'
@@ -37,19 +38,15 @@
 		},
 		data() {
 			return {
-				// src: this.myAvatar,
-				// uname: this.myname,
-				// uschool: "武汉大学",
-				// unumber: "2020202210014",
-				// uphone: "15105257339"
+
 			}
 		},
 		methods: {
-			editAvatar() {
-				uni.navigateTo({
-					url: "./editAvatar"
-				});
-			},
+			// editAvatar() {
+			// 	uni.navigateTo({
+			// 		url: "./editAvatar"
+			// 	});
+			// },
 			editPwd() {
 				uni.navigateTo({
 					url: "./editPwd"

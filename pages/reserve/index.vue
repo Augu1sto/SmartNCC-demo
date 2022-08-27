@@ -134,7 +134,18 @@
 <script>
 	import {City, Switch as SwitchIcon} from '@icon-park/vue';
 	const mDate = require('@/utils/mytime.js');
+	import { mapState } from 'vuex';
 	export default {
+		computed: {
+			...mapState(['hasLogin'])
+		},
+		onShow() {
+			if(!this.hasLogin) {
+				uni.redirectTo({
+					url:'/pages/login/login'
+				})
+			}
+		},
 		components: {
 			City,
 			SwitchIcon
@@ -649,20 +660,22 @@
 	}
 	
 	.footer {
-		padding: 10px 3px 3px 3px;	
+		// padding: 10px 3px 3px 3px;
+		margin-top: 10px;
 		display: grid;
 		grid-template-columns: 2fr 1fr;
-		column-gap: 5px;
+		grid-column-gap: 10px;
 		align-items: center;
 	}
 	
 	.tips {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: space-evenly;
+		align-items: center;
+		justify-content: space-around;
 	}
 	.tips>view {
-		font-size: 5px;
+		font-size: 10px;
 		padding: 2px 5px;
 		color: #555555;
 		border-radius: 5px;

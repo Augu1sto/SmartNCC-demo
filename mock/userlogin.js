@@ -109,4 +109,50 @@ function loginWithToken(token) {
 }
 
 
-export default {login, loginWithToken};
+function changePwd(token,uname,old_pwd,new_pwd) {
+	// 先验证token
+	let code = tokenUtil.validateToken(token);
+	let data = { // 不存在则报错
+			code: 702,
+			msg: '用户token出错'
+	}
+	if(code == 299) {
+		// 进一步验证guid是否存在
+		let guid = tokenUtil.decodedToken(token).guid;
+		console.log(guid)
+		userdata.forEach((user) => {
+			// console.log(user.guid);
+			// console.log(user.guid==guid);
+			if(user.guid === guid && user.username === uname) {
+				if(user.password === old_pwd) {
+					user.password = new_pwd;
+					console.log('密码修改成功')
+					data = {
+						code: 600,
+						msg: '用户密码修改成功'
+					}
+				} else {
+					data= {
+						code: 601,
+						msg: '原密码输入错误'
+					};
+				}
+			}
+		});
+
+	} else if(code == 700) {
+		data = {
+			code: 700,
+			msg: 'token过期'
+		}
+	} else {
+		data = {
+			code: 701,
+			msg: 'token无效'
+		}
+	}
+	return data;
+}
+
+
+export default {login, loginWithToken, changePwd};

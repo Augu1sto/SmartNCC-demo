@@ -118,7 +118,7 @@
 		</view>
 		<!-- 游客页面 -->
 		<view class="btn-area" v-if="!hasLogin">
-			<u-button shape="circle" :plain="true" :hairline="true" color="grey" @click="goToLogin">报名请先登录</u-button>
+			<u-button shape="circle" :plain="true" :hairline="true" color="grey" @click="goToLogin">报名请先<strong>登录</strong></u-button>
 		</view>
 		<view class="btn-area" v-else>
 			<view :class="['star_btn', star===true?'activeStar':'inactiveStar']" @click="clickStar">
@@ -157,7 +157,7 @@
 		</u-popup>
 		<u-popup class="cancelpop" :show="showCancelForm" @close="showCancelForm = false" mode="bottom" :closeOnClickOverlay="true">
 			<view class="pop">
-				<view>取消后无法再次报名，确定取消报名？</view>
+				<view>确定取消报名？</view>
 				<view style="display: flex;align-items:center;width: 100%;margin-top: 32rpx;">
 					<view style="margin-right: 32rpx;width: 100%;">
 						<u-button @click="showCancelForm = false" shape="circle" :hairline="false">再想想</u-button>
@@ -293,10 +293,6 @@
 						uni.showToast({
 							title: this.star?"已收藏":"取消收藏",
 							icon: 'none'
-							// duration: 3000,
-							// complete: uni.redirectTo({
-							// 	url: '../usercenter/reservation'
-							// })
 						});
 						// 跳转或刷新页面
 					} else {

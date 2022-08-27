@@ -48,6 +48,13 @@ const store = new Vuex.Store({
 			uni.removeStorage({
 				key: 'smartNCCdemo_' +  'tokenInfo'
 			})
+		},
+		/**
+		 * @description 修改头像
+		 * @param {Object} payload
+		 */
+		setAvatar(state, payload) {
+			state.avatar = payload;
 		}
 	},
 	actions: {

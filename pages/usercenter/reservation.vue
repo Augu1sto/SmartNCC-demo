@@ -16,7 +16,18 @@
 </template>
 
 <script>
+	import { mapState } from 'vuex';
 	export default {
+		computed: {
+			...mapState(['hasLogin'])
+		},
+		onShow() {
+			if(!this.hasLogin) {
+				uni.redirectTo({
+					url:'/pages/login/login'
+				})
+			}
+		},
 		data() {
 			return {
 				list: ["已预约","已使用"],

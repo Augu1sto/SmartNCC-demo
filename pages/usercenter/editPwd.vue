@@ -32,7 +32,21 @@
 </template>
 
 <script>
+	import { mapState, mapGetters } from 'vuex';
 	export default {
+		computed: {
+			...mapState(['hasLogin']),
+			...mapGetters({
+						myname: 'getUsername'
+					})
+		},
+		onShow() {
+			if(!this.hasLogin) {
+				uni.redirectTo({
+					url:'/pages/login/login'
+				})
+			}
+		},
 		data() {
 			return {
 				form: {
@@ -79,7 +93,66 @@
 			submit() {
 				this.$refs.uform.validate().then(res => {
 					uni.$u.toast('校验通过');
+					console.dir(res);
 					// 数据传输
+					let _this = this;
+					uni.showLoading({
+						title: "提交中"
+					})
+					let req = {
+						uname: this.myname,
+						originpwd: this.form.originPWD,
+						newpwd: this.form.newPWD
+					}
+					this.$axios.post('/changepwd', {data:req}).then((res)=>{
+						console.log(res);
+						if(res.status===200) {
+							console.log(res.data);
+							if(res.data.code === 600) {
+								uni.hideLoading();
+								uni.showToast({
+									title: "修改成功，重新登录",
+									icon: 'success',
+									duration: 3000,
+									complete: ()=>{
+										uni.redirectTo({
+											url: '/pages/login/login',
+											success() {
+												_this.$store.dispatch('reLogin');
+											}
+										});
+									}
+								});
+							} else if (res.data.code === 601) {
+								uni.hideLoading();
+								uni.showToast({
+									title: "原密码输入错误",
+									icon: 'error'
+								});
+							} else {
+								uni.hideLoading();
+								uni.showToast({
+									title: res.data.msg,
+									icon: 'error'
+								})
+							}
+
+							// 跳转或刷新页面
+						} else {
+							uni.hideLoading();
+							uni.showToast({
+								title: res.statusText,
+								icon: 'none'
+							})
+						}
+					}).catch((err)=>{
+						console.log(err);
+						uni.hideLoading();
+						uni.showToast({
+							title: '网络故障',
+							icon: 'error'
+						})
+					});
 				}).catch(errors => {
 					uni.$u.toast('校验失败')
 				})

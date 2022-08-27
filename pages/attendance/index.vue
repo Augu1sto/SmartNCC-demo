@@ -95,7 +95,18 @@
 	
 	const mTime = require('@/utils/mytime.js');
 	
+	import { mapState } from 'vuex';
 	export default {
+		computed: {
+			...mapState(['hasLogin'])
+		},
+		onShow() {
+			if(!this.hasLogin) {
+				uni.redirectTo({
+					url:'/pages/login/login'
+				})
+			}
+		},
 		components: {
 			Inspection,
 			SunOne,

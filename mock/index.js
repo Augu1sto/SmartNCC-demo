@@ -1,5 +1,6 @@
 const Mock = require('better-mock')
 const mockURL = 'http://localhost:8080'
+// const mockURL = 'http://192.168.43.14:8080'
 import urlParser from './utils/urlParser.js'
 
 /**
@@ -120,6 +121,31 @@ Mock.mock(`${mockURL}/tokenlogin`, 'get', (options)=>{
 	console.log('mock', options.headers);
 	if(options.headers.Authorization) {
 		return loginMock.loginWithToken(options.headers.Authorization);
+	}
+	return {code:900,msg:'ERROR'};
+});
+
+
+/**
+ * 用户数据更改
+ */
+
+// // 图片上传
+// Mock.mock(RegExp(`${mockURL}/upload` + ".*"), 'post', (options)=>{
+// 	console.log('mock', options.body);
+// 	// let data = urlParser.parse2JSON(options.url);
+// 	let data = JSON.parse(options.body).data;
+// 	// TODO: blob连接下载到本地
+// 	return data.name;
+// });
+
+// 修改密码
+Mock.mock(RegExp(`${mockURL}/changepwd` + ".*"), 'post', (options)=>{
+	console.log('mock', options.body);
+	// let data = urlParser.parse2JSON(options.url);
+	let data = JSON.parse(options.body).data;
+	if(options.headers.Authorization) {
+		return loginMock.changePwd(options.headers.Authorization, data.uname, data.originpwd, data.newpwd);
 	}
 	return {code:900,msg:'ERROR'};
 });

@@ -222,7 +222,7 @@ function cancelJoin(id) {
 	if(idx == -1) {
 		return false;
 	}
-	joinkey.splice(idx, idx);
+	joinkey.splice(idx, idx+1);
 	// 2. allData里相应的人数减1
 	// status设为0
 	allData[id].currn--;
@@ -256,7 +256,7 @@ function unStarActivity(id) {
 	if(idx == -1) {
 		return false;
 	}
-	starkey.splice(idx, idx);
+	starkey.splice(idx, idx+1);
 	return true;
 }
 

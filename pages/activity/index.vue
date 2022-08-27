@@ -58,7 +58,7 @@
 		</view>
 		
 		
-		<myTabBar :tabList="tabs" :current="currNow" bgColor="white" activeColor="#00adb5" @choose="chooseTab">
+		<myTabBar v-if="hasLogin" :tabList="tabs" :current="currNow" bgColor="white" activeColor="#00adb5" @choose="chooseTab">
 		</myTabBar>
 		
 	</view>
@@ -68,7 +68,11 @@
 	import myTabBar from '@/components/myTabBar/myTabBar.vue';
 	import myPopover from '@/components/myPopover/myPopover.vue';
 	import {Down,Switch as SwitchIcon} from '@icon-park/vue';
+	import { mapState, mapGetters } from 'vuex';
 	export default {
+		computed: {
+			...mapState(['hasLogin'])
+		},
 		components: {
 			myTabBar,
 			myPopover,

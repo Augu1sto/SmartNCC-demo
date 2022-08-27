@@ -87,8 +87,10 @@
 	
 	// uni-calendar样式修改
 	.at .uni-calendar-item__weeks-box-circle {
-		background-image: url('data:image/svg+xml,<?xml version="1.0" encoding="UTF-8"?><svg width="12" height="12" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#icon-14729d3c353e4f38)"><path d="M42 20V39C42 40.6569 40.6569 42 39 42H9C7.34315 42 6 40.6569 6 39V9C6 7.34315 7.34315 6 9 6H30" stroke="#7ed321" stroke-width="4" stroke-linecap="round" stroke-linejoin="miter"/><path d="M16 20L26 28L41 7" stroke="#7ed321" stroke-width="4" stroke-linecap="round" stroke-linejoin="miter"/></g><defs><clipPath id="icon-14729d3c353e4f38"><rect width="48" height="48" fill="#FFF"/></clipPath></defs></svg>')!important;
+		background-image: url('https://cdn-icons-png.flaticon.com/512/5290/5290058.png');
 		background-color: transparent!important;
+		background-position: 0 0;
+		background-size: contain;
 		top: 8px!important;
 		right: 8px!important;
 		width: 12px!important;
@@ -111,6 +113,16 @@
 		border-radius: 100%!important;
 	}
 
+	.upload-box .u-upload__deletable {
+		height: 18px!important;
+		width: 18px!important;
+		border-radius: 100%!important;
+	}
+	
+	.upload-box .u-upload__deletable__icon {
+		position: unset!important;
+		transform: scale(0.9)!important;
+	}
 	
 	
 </style>

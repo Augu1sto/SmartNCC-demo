@@ -67,10 +67,10 @@
 			}
 		},
 		onLoad() {
-			this.fetchInitialData();
 			let day = new Date().getDay();
 			this.today = ((day===0||day===6)?1:0);
 			this.dayidx = this.today;
+			this.fetchInitialData();
 		},
 		mounted() {
 			let _this = this; // 声明一个变量指向Vue实例this，保证作用域一致
