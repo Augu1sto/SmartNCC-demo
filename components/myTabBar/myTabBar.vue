@@ -54,6 +54,9 @@
 
 <style lang="scss">
 	@import url("https://cdn.bootcdn.net/ajax/libs/font-awesome/6.1.2/css/all.css");
+	* {
+		box-sizing: border-box;
+	}
 	.my-tabbar {
 		position: fixed;
 		bottom: 0;
@@ -66,13 +69,14 @@
 		align-items: center;
 		box-shadow: 0px -10px 10px #eee;
 		z-index: 900;
+		
 	}
 	
 	.my-tab {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: end;
+		justify-content: flex-start;
 		height: 90px;
 		position: relative;
 		bottom: -20px;
@@ -80,15 +84,15 @@
 		color: #999;
 		transition: all 80ms ease ;
 		&_icon {
-			width:30px;
-			height: 30px;
+			width: 50px;
+			height: 50px;
 			border: var(--bg-color) 5px solid;
 			// border-bottom: none;
 			border-radius: 50%;
-			padding: 5px;
+			// padding: 5px;
 			text-align: center;
 			font-size: 25px;
-			line-height: 30px;
+			line-height: 40px;
 		}
 		&_text {
 			text-align: center;
@@ -99,7 +103,7 @@
 	
 	.active {
 		position: relative;
-		bottom: 0;
+		bottom: 0px;
 		.my-tab_icon {
 			background-color: var(--active-color);
 			color: white;

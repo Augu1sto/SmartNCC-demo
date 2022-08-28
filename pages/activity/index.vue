@@ -17,7 +17,7 @@
 				</view>
 			</view>
 		</u-sticky>
-		<view class="content" style="margin-bottom: 80px;">
+		<view class="content" style="padding-bottom: 80px;">
 			<view :class="['cardbox',subindex===1?'finished':'']" v-for="(item, index) in data" :key="item.id" @click="goToDetail(item.id)">
 				<!-- 印章效果 -->
 				<view v-if="subindex===1" class="seal" style="position: absolute;right: 10rpx;top: 14rpx;">
@@ -164,7 +164,7 @@
 </script>
 
 <style lang="scss">
-	* {
+	.main * {
 		box-sizing: border-box;
 	}
 	.pickerbox {

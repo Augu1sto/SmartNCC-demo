@@ -47,7 +47,10 @@
 							:key="listIndex"
 							@click="openUrl(listItem)"
 					>
-						<view class="url-box" :style="{backgroundImage: 'url('+listItem.image+')'}"></view>
+						<!-- <view class="url-box" :style="{backgroundImage: 'url('++')'}"> -->
+						<view>
+							<image class="url-box" :src="listItem.image" mode="scaleToFill"></image>
+						</view>
 						<text class="grid-text">{{listItem.title}}</text>
 					</view>
 				</view>
@@ -286,8 +289,8 @@
 		width: 150px;
 		border: white 2px solid;
 		border-radius: 3px;
-		background-size: cover;
-		background-repeat: no-repeat;
+		// background-size: cover;
+		// background-repeat: no-repeat;
 	}
 
 	.title {

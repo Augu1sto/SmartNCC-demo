@@ -311,7 +311,13 @@
 					})
 				});
 			},
+			
 			submit() {
+				if(uni.$u.test.mobile(this.form.tel)) {
+					this.submitJoin();
+				}
+			},
+			submitJoin() {
 				let _this = this;
 				uni.showLoading({
 					title: "提交中"
