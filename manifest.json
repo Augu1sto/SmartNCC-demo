@@ -74,6 +74,12 @@
         "router" : {
             "mode" : "hash",
             "base" : "./"
+        },
+        "template" : "template.html",
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
         }
     }
 }
