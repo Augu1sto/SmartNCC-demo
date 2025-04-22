@@ -2,7 +2,7 @@
 
 ## H5预览地址
 
-https://augu1sto.gitee.io/projects/smartncc/demo/
+[https://augu1sto.gitee.io/projects/smartncc/demo/](https://augu1sto.github.io/augu1sto/projects/smartncc/demo)
 
 **开放用户名/密码：**
 
